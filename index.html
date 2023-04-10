@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <title>随机跳转</title>
+
+</head>
+
+<body>
+
+  <button onclick="jump()">随机跳转友链</button>
+
+
+
+  <script>
+
+    function jump() {
+
+      // 发送GET请求获取links.json文件
+
+      var xhr = new XMLHttpRequest();
+
+      xhr.open('GET', 'links.json', true);
+
+      xhr.onload = function() {
+
+        if (xhr.status === 200) {
+
+          // 解析JSON数据
+
+          var data = JSON.parse(xhr.responseText);
+
+          // 随机选择一个网址
+
+          var index = Math.floor(Math.random() * data.links.length);
+
+          var url = data.links[index];
+
+          // 跳转到选中的网址
+
+          window.location.href = url;
+
+        }
+
+      };
+
+      xhr.send();
+
+    }
+
+  </script>
+
+</body>
+
+</html>
