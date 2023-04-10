@@ -1,59 +1,47 @@
 <!DOCTYPE html>
-
 <html>
-
 <head>
-
-  <meta charset="UTF-8">
-
-  <title>随机跳转</title>
-
+	<title>随机跳转友链</title>
+	<style>
+		body {
+			background-color: #f7f7f7;
+			font-family: Arial, sans-serif;
+			text-align: center;
+			margin-top: 100px;
+		}
+		h1 {
+			color: #444;
+			margin-bottom: 30px;
+		}
+		button {
+			padding: 10px 20px;
+			background-color: #008CBA;
+			border: none;
+			color: #fff;
+			font-size: 18px;
+			cursor: pointer;
+			border-radius: 4px;
+		}
+		button:hover {
+			background-color: #00596B;
+		}
+	</style>
 </head>
-
 <body>
+	<h1>点击按钮随机跳转友链</h1>
+	<button onclick="randomRedirect()">开始</button>
 
-  <button onclick="jump()">随机跳转友链</button>
-
-
-
-  <script>
-
-    function jump() {
-
-      // 发送GET请求获取links.json文件
-
-      var xhr = new XMLHttpRequest();
-
-      xhr.open('GET', 'links.json', true);
-
-      xhr.onload = function() {
-
-        if (xhr.status === 200) {
-
-          // 解析JSON数据
-
-          var data = JSON.parse(xhr.responseText);
-
-          // 随机选择一个网址
-
-          var index = Math.floor(Math.random() * data.links.length);
-
-          var url = data.links[index];
-
-          // 跳转到选中的网址
-
-          window.location.href = url;
-
-        }
-
-      };
-
-      xhr.send();
-
-    }
-
-  </script>
-
+	<script>
+		function randomRedirect() {
+			fetch('links.json')
+				.then(response => response.json())
+				.then(data => {
+					const links = data.links;
+					const randomIndex = Math.floor(Math.random() * links.length);
+					window.location.href = links[randomIndex];
+				})
+				.catch(error => console.error('Error:', error));
+		}
+	</script>
 </body>
-
 </html>
